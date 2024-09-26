@@ -54,10 +54,12 @@ export default class BeeperService {
         if(!beepers){
             return false;
         }
-        let beeper:Beeper|any = beepers.find(bep => bep.id == parseInt(id))
+        //find the beeper
+        const beeper:Beeper = beepers.find(bep => bep.id == parseInt(id)) as Beeper
         if (!beeper) {
             console.log("no such beeper");  
         }
+        //update the status and save
         beeper.status = status
         beepers.push(beeper)
        
@@ -90,28 +92,6 @@ export default class BeeperService {
             console.log("you detonated the beeper");
             return false;
         }
-        //check if no status at body
-        if(status == ""){
-            console.log(beeper.status)
-              switch(beeper.status){
-                case "manufactured":
-                    beeper.status = BeeperStatus.assembled;
-                    break;
-                case "assembled":
-                    beeper.status = BeeperStatus.shipped;
-                    break;
-                case "shipped":
-                    beeper.status = BeeperStatus.deployed;
-                    break;
-                default:
-                    console.log("no such status");
-                    return false;
-      
-        }
-        beepers.push(beeper)
-        return await saveFile('beepeers', beepers);
-    }
-
         //save the array back to the file
         return await saveFile('beepeers', beepers);
     }
