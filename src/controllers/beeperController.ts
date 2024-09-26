@@ -46,7 +46,7 @@ beeperRouter.get('/', async (req: Request, res: Response): Promise<void> => {
 })
 beeperRouter.get('/status/:status', async (req: Request, res: Response): Promise<void> => {
     try {
-        const beeper = await beeperService.getBeepersByStatus(req.params.status);
+        const beeper = await beeperService.getBeepersByStatus(req.params.status as BeeperStatus);
         if (!beeper) {
             throw new Error('Failed to fetch beepers');
         }

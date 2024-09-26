@@ -30,7 +30,7 @@ export default class BeeperService {
         const beepers:Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
         return beepers?.find(beeper => beeper.id === parseInt(id));
     }
-    public static async getBeepersByStatus(status:string): Promise<Beeper[]> {
+    public static async getBeepersByStatus(status:BeeperStatus): Promise<Beeper[]> {
         //get the file as an array
         const beepers:Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
         return beepers.filter(beeper => beeper.status == status);
@@ -46,5 +46,7 @@ export default class BeeperService {
         //save the array back to the file 
         return await saveFile('beepeers', beepers);
     }
+    
+    
 }
      
