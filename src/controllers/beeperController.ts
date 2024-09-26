@@ -1,7 +1,6 @@
 import express,{Request,Router,Response} from 'express';
 import beeperService from '../services/beeperService';
 import BeeperStatus from '../utils/enumStatus';
-import locationBeeperDTO from '../DTO/locationDTO';
 
 const beeperRouter: Router = express.Router();
 

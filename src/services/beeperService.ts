@@ -48,13 +48,13 @@ export default class BeeperService {
         //save the array back to the file 
         return await saveFile('beepeers', beepers);
     }
-    public static async updateStatusBeeper(id: string, status?:string,Latitude?:number,Longitude?:number): Promise<boolean> {
+    public static async updateStatusBeeper(id: string, status:string,Latitude?:number,Longitude?:number): Promise<boolean> {
         //get the file as an array
         let beepers: Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
         if(!beepers){
             return false;
         }
-        const beeper:Beeper|any = beepers.find(bep => bep.id == parseInt(id))
+        let beeper:Beeper|any = beepers.find(bep => bep.id == parseInt(id))
         if (!beeper) {
             console.log("no such beeper");  
         }
@@ -72,7 +72,7 @@ export default class BeeperService {
                 beeper.status = BeeperStatus.detonated;
                 beeper.detonated_at = new Date(); 
                    saveFile('beepeers', beepers);
-            }, 3000);
+            }, 10000);
         }
         if(status === BeeperStatus.detonated){
             console.log("you detonated the beeper");
@@ -81,7 +81,6 @@ export default class BeeperService {
         if(status === ""){
             console.log(beeper.status)
               switch(beeper.status){
-                
                 case "manufactured":
                     beeper.status = BeeperStatus.assembled;
                     break;
