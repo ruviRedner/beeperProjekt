@@ -4,10 +4,12 @@ import beeperController from './src/controllers/beeperController';
 
 const app: Express = express();
 
+const port: number = 5050;
+
 app.use(express.json());
 
-app.use('/beeper', beeperController);
+app.use('/api/beepers', beeperController);
 
-app.listen(process.env.PORT,():void => {
-    console.log(`Server is running on port, ${process.env.PORT}`); 
+app.listen(port,():void => {
+    console.log(`Server is running on port, ${port}`); 
 })

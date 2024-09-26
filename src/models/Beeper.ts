@@ -1,17 +1,25 @@
-import {v4} from "uuid";
+// import {v4} from "uuid";
+import BeeperStatus from "../utils/enumStatus";
 class Beeper {
-    public id: string;
-    public dateCreated: Date;
-    public explosionDate: Date;
+    public id: number;
+    public created_at: Date;
+    public status: string
+    public Longitude : number
+    public Latitude : number
+    public detonated_at?: Date
+    
     constructor(
-        public beeperName: string,
-        public Longitude : number,
-        public Latitude : number
-
-
+        public name: string, 
     ) {
-        this.id = v4();
-        this.dateCreated = new Date();
-        this.explosionDate = new Date();
+        this.id = +Math.random().toString().split(".")[1]
+        this.created_at = new Date();
+        this.status = "manufactured"
+        this.Longitude = 0
+        this.Latitude = 0
+        
+        
+        
     }
 }
+
+export default Beeper;

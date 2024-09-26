@@ -1,20 +1,21 @@
 import express,{Request,Router,Response} from 'express';
 import beeperService from '../services/beeperService';
+import BeeperStatus from '../utils/enumStatus';
 
 const beeperRouter: Router = express.Router();
 
-beeperRouter.post('/api/beepers',async (req: Request, res: Response):Promise<void> => {
+beeperRouter.post('/',async (req: Request, res: Response):Promise<void> => {
     try {
-        
+        const beepers = await beeperService.createBeeper(req.body);
+        if (!beepers) {
+            throw new Error('Failed to save beeper');
+        }
             res.status(200).json({
                 err:false,
                 message:"data saved sucsspuly",
-                data:undefined
-            })
-      
-       
-        
-    } catch (err) {
+                data:beepers
+            })   
+        } catch (err) {
         res.status(400).json({
             err:true,
             message: "sorry",
@@ -23,50 +24,39 @@ beeperRouter.post('/api/beepers',async (req: Request, res: Response):Promise<voi
     }
 })
 
-beeperRouter.get('/api/beepers', async (req: Request, res: Response): Promise<void> => {
-    try {
-       
-        res.status(200).json({
-            err: false,
-            message: "data fetched successfully",
-            data: undefined
-        })
-    } catch (err) {
-        res.status(400).json({
-            err: true,
-            message: "sorry",
-            data: null
-        })
-    }
-})
-
-beeperRouter.get('/api/beepers/:id', async (req: Request, res: Response): Promise<void> => {
+beeperRouter.get('/', async (req: Request, res: Response): Promise<void> => {
     try {
         
-        res.status(200).json({
-            err: false,
-            message: "data fetched successfully",
-            data: undefined
-        })
-    } catch (err) {
-        res.status(400).json({
-            err: true,
-            message: "sorry",
-            data: null
+            const beepers = await beeperService.getBeepers();
+            if (!beepers) {
+                throw new Error('Failed to fetch beepers');
+            }
+            res.status(200).json({
+                err: false,
+                message: "data fetched successfully",
+                data:beepers
+            })
+            } catch (err) {
+              res.status(400).json({
+              err: true,
+              message: "sorry",
+              data: null
         })
     }
 })
-
-beeperRouter.get('/api/beepers/status/:status', async (req: Request, res: Response): Promise<void> => {
+beeperRouter.get('/status/:status', async (req: Request, res: Response): Promise<void> => {
     try {
-        
+        const beeper = await beeperService.getBeepersByStatus(req.params.status);
+        if (!beeper) {
+            throw new Error('Failed to fetch beepers');
+        }
         res.status(200).json({
             err: false,
             message: "data fetched successfully",
-            data: undefined
+            data: beeper
         })
-    } catch (err) {
-        res.status(400).json({
+        } catch (err) {
+            res.status(400).json({
             err: true,
             message: "sorry",
             data: null
@@ -74,7 +64,8 @@ beeperRouter.get('/api/beepers/status/:status', async (req: Request, res: Respon
     }
 })
 
-beeperRouter.put('/api/beepers/:id/status', async (req: Request, res: Response): Promise<void> => {
+
+beeperRouter.put('/:id/status', async (req: Request, res: Response): Promise<void> => {
     try {
         
         res.status(200).json({
@@ -91,16 +82,38 @@ beeperRouter.put('/api/beepers/:id/status', async (req: Request, res: Response):
     }
 })
 
-beeperRouter.delete('/api/beepers/:id', async (req: Request, res: Response): Promise<void> => {
+beeperRouter.delete('/:id', async (req: Request, res: Response): Promise<void> => {
     try {
-        
+        const beeper = await beeperService.deleteBeeper(req.params.id);
+        if (!beeper) {
+            throw new Error('Failed to delete beeper');
+        }
         res.status(200).json({
             err: false,
             message: "data deleted successfully",
-            data: undefined
+            data: beeper
         })
     } catch (err) {
         res.status(400).json({
+            err: true,
+            message: "sorry",
+            data: null
+        })
+    }
+})
+beeperRouter.get('/:id', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const beeper = await beeperService.getBeeperById(req.params.id);
+        if (!beeper) {
+            throw new Error('Failed to fetch beeper');
+        }
+        res.status(200).json({
+            err: false,
+            message: "data fetched successfully",
+            data: beeper
+        })
+        } catch (err) {
+            res.status(400).json({
             err: true,
             message: "sorry",
             data: null

@@ -1,0 +1,4 @@
+interface BeeperDTO {
+    name: string;
+    
+}
