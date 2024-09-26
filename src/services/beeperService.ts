@@ -59,13 +59,24 @@ export default class BeeperService {
             console.log("no such beeper");  
         }
         beeper.status = status
+        beepers.push(beeper)
        
         if(status === BeeperStatus.deployed){
             console.log("you deployed the beeper");
             if(!Latitude || !Longitude){
                 console.log("you did not provide location for deployment");
                 return false;
-            }           
+            }
+            //check if the long is in range
+            if(Longitude < 35.04438 || Longitude > 36.59793){
+                console.log("beeper is out of range");
+                return false;
+            } 
+            //check if the lat is in range
+            if(Latitude < 33.01048 || Latitude > 34.6793){
+                console.log("beeper is out of range");
+                return false;
+            }
             beeper.Longitude = Longitude;
             beeper.Latitude = Latitude;
             setTimeout(() => {
@@ -74,11 +85,13 @@ export default class BeeperService {
                    saveFile('beepeers', beepers);
             }, 10000);
         }
+        //check if allready det
         if(status === BeeperStatus.detonated){
             console.log("you detonated the beeper");
             return false;
         }
-        if(status === ""){
+        //check if no status at body
+        if(status == ""){
             console.log(beeper.status)
               switch(beeper.status){
                 case "manufactured":
@@ -100,7 +113,6 @@ export default class BeeperService {
     }
 
         //save the array back to the file
-        beepers.push(beeper)
         return await saveFile('beepeers', beepers);
     }
 }
