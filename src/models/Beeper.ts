@@ -4,8 +4,8 @@ class Beeper {
     public id: number;
     public created_at: Date;
     public status: string
-    public Longitude : number
-    public Latitude : number
+    public Longitude? : number
+    public Latitude? : number
     public detonated_at?: Date
     
     constructor(

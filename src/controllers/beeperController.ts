@@ -1,6 +1,7 @@
 import express,{Request,Router,Response} from 'express';
 import beeperService from '../services/beeperService';
 import BeeperStatus from '../utils/enumStatus';
+import locationBeeperDTO from '../DTO/locationDTO';
 
 const beeperRouter: Router = express.Router();
 
@@ -67,17 +68,19 @@ beeperRouter.get('/status/:status', async (req: Request, res: Response): Promise
 
 beeperRouter.put('/:id/status', async (req: Request, res: Response): Promise<void> => {
     try {
-        
+        const beeper = await beeperService.updateStatusBeeper(req.params.id, req.body.status, req.body.Latitude,req.body.Longitude);
+        if (!beeper) {
+            throw new Error('Failed to update beeper');
+        }
         res.status(200).json({
             err: false,
             message: "data updated successfully",
-            data: undefined
+            data: beeper
         })
-    } catch (err) {
-        res.status(400).json({
+        } catch (err) {
+            res.status(400).json({
             err: true,
             message: "sorry",
-            data: null
         })
     }
 })

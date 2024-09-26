@@ -1,4 +1,9 @@
+
+
 interface locationBeeperDTO{
-    Longitude : number
-    Latitude  : number
+    status: string
+    Longitude? : number
+    Latitude?  : number
 } 
+
+    export default locationBeeperDTO;
