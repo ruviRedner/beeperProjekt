@@ -9,18 +9,9 @@
     "detonated_at": "2024-09-26T13:30:21.477Z"
   },
   {
-    "name": "rt",
-    "id": 10520355952632654,
-    "created_at": "2024-09-26T13:15:57.579Z",
-    "status": "manufactured",
-    "Longitude": 0,
-    "Latitude": 0
-  },
-  {
     "name": "bep",
     "id": 566373474325296,
     "created_at": "2024-09-26T13:16:04.547Z",
-    "status": "manufactured",
     "Longitude": 0,
     "Latitude": 0
   },
@@ -72,5 +63,33 @@
     "Longitude": 36.42971,
     "Latitude": 36.42971,
     "detonated_at": "2024-09-26T13:30:21.477Z"
+  },
+  {
+    "name": "rt",
+    "id": 10520355952632654,
+    "created_at": "2024-09-26T13:15:57.579Z",
+    "Longitude": 0,
+    "Latitude": 0
+  },
+  {
+    "name": "rt",
+    "id": 10520355952632654,
+    "created_at": "2024-09-26T13:15:57.579Z",
+    "Longitude": 0,
+    "Latitude": 0
+  },
+  {
+    "name": "rt",
+    "id": 10520355952632654,
+    "created_at": "2024-09-26T13:15:57.579Z",
+    "Longitude": 0,
+    "Latitude": 0
+  },
+  {
+    "name": "bep",
+    "id": 566373474325296,
+    "created_at": "2024-09-26T13:16:04.547Z",
+    "Longitude": 0,
+    "Latitude": 0
   }
 ]

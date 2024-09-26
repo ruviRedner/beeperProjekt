@@ -1,8 +1,8 @@
-import e from "express";
+
 import { getFileData,saveFile } from "../config/fileDataLayer";
-import locationBeeperDTO from "../DTO/locationDTO";
 import Beeper from "../models/Beeper";
 import BeeperStatus from "../utils/enumStatus";
+
 
 export default class BeeperService {
     public static async createBeeper(newBeeper: BeeperDTO): Promise<boolean> {
@@ -48,7 +48,7 @@ export default class BeeperService {
         //save the array back to the file 
         return await saveFile('beepeers', beepers);
     }
-    public static async updateStatusBeeper(id: string, status:string,Latitude:number,Longitude:number): Promise<boolean> {
+    public static async updateStatusBeeper(id: string, status?:string,Latitude?:number,Longitude?:number): Promise<boolean> {
         //get the file as an array
         let beepers: Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
         if(!beepers){
@@ -59,7 +59,7 @@ export default class BeeperService {
             console.log("no such beeper");  
         }
         beeper.status = status
-        beepers.push(beeper)
+       
         if(status === BeeperStatus.deployed){
             console.log("you deployed the beeper");
             if(!Latitude || !Longitude){
@@ -78,13 +78,36 @@ export default class BeeperService {
             console.log("you detonated the beeper");
             return false;
         }
-        
-        //save the array back to the file
+        if(status === ""){
+            console.log(beeper.status)
+              switch(beeper.status){
+                
+                case "manufactured":
+                    beeper.status = BeeperStatus.assembled;
+                    break;
+                case "assembled":
+                    beeper.status = BeeperStatus.shipped;
+                    break;
+                case "shipped":
+                    beeper.status = BeeperStatus.deployed;
+                    break;
+                default:
+                    console.log("no such status");
+                    return false;
+      
+        }
+        beepers.push(beeper)
         return await saveFile('beepeers', beepers);
-       
+    }
+
+        //save the array back to the file
+        beepers.push(beeper)
+        return await saveFile('beepeers', beepers);
+    }
+}
                
  
-    }
     
-}
+    
+
      
