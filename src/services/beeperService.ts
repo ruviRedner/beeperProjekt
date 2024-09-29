@@ -19,7 +19,7 @@ export default class BeeperService {
         beepers.push(beeper);
         //save the array back to the file 
         return await saveFile('beepeers', beepers);         
-     }
+    }
     public static async getBeepers(): Promise<Beeper[]> {
         //get the file as an array
         const beepers:Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
