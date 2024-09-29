@@ -64,7 +64,6 @@ beeperRouter.get('/status/:status', async (req: Request, res: Response): Promise
     }
 })
 
-
 beeperRouter.put('/:id/status', async (req: Request, res: Response): Promise<void> => {
     try {
         const beeper = await beeperService.updateStatusBeeper(req.params.id, req.body.status, req.body.Latitude,req.body.Longitude);
@@ -103,6 +102,7 @@ beeperRouter.delete('/:id', async (req: Request, res: Response): Promise<void> =
         })
     }
 })
+
 beeperRouter.get('/:id', async (req: Request, res: Response): Promise<void> => {
     try {
         const beeper = await beeperService.getBeeperById(req.params.id);
@@ -122,9 +122,5 @@ beeperRouter.get('/:id', async (req: Request, res: Response): Promise<void> => {
         })
     }
 })
-
-
-
-
 
 export default beeperRouter

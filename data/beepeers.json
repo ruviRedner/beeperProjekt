@@ -1,0 +1,29 @@
+[
+  {
+    "name": "rt",
+    "id": 300874151517907,
+    "created_at": "2024-09-29T05:21:17.222Z",
+    "status": "detonated",
+    "Longitude": 35.1,
+    "Latitude": 34.1,
+    "detonated_at": "2024-09-29T07:14:24.227Z"
+  },
+  {
+    "name": "rt",
+    "id": 300874151517907,
+    "created_at": "2024-09-29T05:21:17.222Z",
+    "status": "detonated",
+    "Longitude": 35.1,
+    "Latitude": 34.1,
+    "detonated_at": "2024-09-29T07:14:24.227Z"
+  },
+  {
+    "name": "test",
+    "id": 3653670205429522,
+    "created_at": "2024-09-29T11:31:08.446Z",
+    "status": "detonated",
+    "Longitude": 35.1,
+    "Latitude": 34.1,
+    "detonated_at": "2024-09-29T11:33:49.663Z"
+  }
+]

@@ -1,4 +1,4 @@
-
+import { getNextStatus } from "../utils/founctionToUse";
 import { getFileData,saveFile } from "../config/fileDataLayer";
 import Beeper from "../models/Beeper";
 import BeeperStatus from "../utils/enumStatus";
@@ -48,57 +48,49 @@ export default class BeeperService {
         //save the array back to the file 
         return await saveFile('beepeers', beepers);
     }
-    public static async updateStatusBeeper(id: string, status:string,Latitude?:number,Longitude?:number): Promise<boolean> {
+    public static async updateStatusBeeper(id: string, status?:string,Latitude?:number,Longitude?:number): Promise<boolean> {
         //get the file as an array
         let beepers: Beeper[] = await getFileData<Beeper>('beepeers') as Beeper[];
         if(!beepers){
             return false;
         }
         //find the beeper
-        const beeper:Beeper = beepers.find(bep => bep.id == parseInt(id)) as Beeper
-        if (!beeper) {
-            console.log("no such beeper");  
+        const beeperIndex = beepers.findIndex((beep) => beep.id === parseInt(id));
+        if (beeperIndex === -1) {
+            console.log("no such beeper");
+            return false;  
         }
+        const beeper = beepers[beeperIndex]
         //update the status and save
-        beeper.status = status
-        beepers.push(beeper)
-       
-        if(status === BeeperStatus.deployed){
+        const newStatus = status ? status : getNextStatus(beeper.status as BeeperStatus) 
+         //check if allready det
+         if(newStatus === BeeperStatus.detonated){
+            console.log("you detonated the beeper");
+            return false;
+        }
+        beeper.status = newStatus
+        //check if status is deployed
+        if(newStatus === BeeperStatus.deployed){
             console.log("you deployed the beeper");
             if(!Latitude || !Longitude){
                 console.log("you did not provide location for deployment");
                 return false;
             }
             //check if the long is in range
-            if(Longitude < 35.04438 || Longitude > 36.59793){
+            if(Longitude < 35.04438 || Longitude > 36.59793 || Latitude < 33.01048 || Latitude > 34.6793){
                 console.log("beeper is out of range");
                 return false;
             } 
-            //check if the lat is in range
-            if(Latitude < 33.01048 || Latitude > 34.6793){
-                console.log("beeper is out of range");
-                return false;
-            }
             beeper.Longitude = Longitude;
             beeper.Latitude = Latitude;
             setTimeout(() => {
                 beeper.status = BeeperStatus.detonated;
-                beeper.detonated_at = new Date(); 
+                beeper.detonated_at = new Date();
+                console.log("in 10 seconed the beeper will be detonated");
                    saveFile('beepeers', beepers);
             }, 10000);
-        }
-        //check if allready det
-        if(status === BeeperStatus.detonated){
-            console.log("you detonated the beeper");
-            return false;
-        }
+        } 
         //save the array back to the file
         return await saveFile('beepeers', beepers);
     }
 }
-               
- 
-    
-    
-
-     
